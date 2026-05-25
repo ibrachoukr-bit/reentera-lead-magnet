@@ -181,10 +181,10 @@ export function ProductBridgeBlock() {
 export default function DownloadHub({
   assignedMission,
   firstName,
-  resultPattern,
+  resultKey,
   selectedPace,
 }) {
-  const assignment = getDownloadAssignment(resultPattern);
+  const assignment = getDownloadAssignment(resultKey);
   const missionName = assignedMission ?? assignment.missionName;
   const displayResultPattern = assignment.resultPattern;
   const cards = downloadCardCopy.map((card) => ({

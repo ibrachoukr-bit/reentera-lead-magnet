@@ -15,6 +15,8 @@ import {
   X,
 } from 'lucide-react';
 import {
+  RESULT_CONFIG,
+  RESULT_KEYS,
   getBarrierScores,
   getResultPattern,
   hopeCurvePoints,
@@ -56,9 +58,9 @@ const preFlightCards = [
 ];
 
 const missionVariants = {
-  longTermAvoider: {
+  [RESULT_KEYS.longTermAvoider]: {
     badge: 'STEP 2: THE FIELD MISSION',
-    missionTitle: 'Day 0 — The "Hold Your Ground" Rep',
+    missionTitle: RESULT_CONFIG[RESULT_KEYS.longTermAvoider].fieldMissionTitle,
     heading: 'Do Not Make It Impressive. Make It Completed.',
     briefing: [
       'The Mechanical Truth: Confidence is not a personality trait you are born with; it is the automatic byproduct of accumulated wins. And wins are built by movement, not perfection.',
@@ -86,9 +88,9 @@ const missionVariants = {
     bridgeQuote:
       'You cannot fix a decade of isolation with one coffee shop visit. To build permanent muscle memory so you never have to overthink or rely on willpower again, you need the complete 8-Week Social Re-Entry System.',
   },
-  conversationFreeze: {
+  [RESULT_KEYS.skillGapFreeze]: {
     badge: 'STEP 2: THE FIELD MISSION',
-    missionTitle: 'Day 0 — The "Curiosity Drop" Rep',
+    missionTitle: RESULT_CONFIG[RESULT_KEYS.skillGapFreeze].fieldMissionTitle,
     heading: 'Do Not Make It Impressive. Make It Completed.',
     briefing: [
       'The Mechanical Truth: Confidence is not a personality trait you are born with; it is the automatic byproduct of accumulated wins. And wins are built by movement, not perfection.',
@@ -116,9 +118,9 @@ const missionVariants = {
     bridgeQuote:
       'Knowing one conversational trick won\'t make you socially fluent. To learn the complete mechanics of human connection—how to transition from small talk to deep talk, how to read body language, and how to never run out of things to say—you need the complete 8-Week Social Re-Entry System.',
   },
-  bodyReaction: {
+  [RESULT_KEYS.bodyReaction]: {
     badge: 'STEP 2: THE FIELD MISSION',
-    missionTitle: 'Day 0 — The "Functional Bypass" Rep',
+    missionTitle: RESULT_CONFIG[RESULT_KEYS.bodyReaction].fieldMissionTitle,
     heading: 'Do Not Make It Impressive. Make It Completed.',
     briefing: [
       'The Mechanical Truth: Confidence is not a personality trait you are born with; it is the automatic byproduct of accumulated wins. And wins are built by movement, not perfection.',
@@ -146,12 +148,6 @@ const missionVariants = {
     bridgeQuote:
       'You cannot permanently rewire a hyperactive nervous system with one question. To completely eliminate the freeze response, stop the physical symptoms before they start, and learn how to comfortably hold space around women, you need the complete 8-Week Social Re-Entry System.',
   },
-};
-
-const resultNameToMissionId = {
-  'The Long-Term Avoider': 'longTermAvoider',
-  'The “I Don’t Know What to Say” Pattern': 'conversationFreeze',
-  'The Body-Reaction Pattern': 'bodyReaction',
 };
 
 function resetViewportPosition() {
@@ -312,11 +308,7 @@ function PreFlightRoutineScreen({ onNext }) {
 }
 
 function getMissionVariant(result) {
-  return (
-    missionVariants[result?.id] ??
-    missionVariants[resultNameToMissionId[result?.name]] ??
-    missionVariants.bodyReaction
-  );
+  return missionVariants[result?.id] ?? missionVariants[RESULT_KEYS.bodyReaction];
 }
 
 function TacticalBriefing({ mission }) {
@@ -1167,7 +1159,7 @@ export default function ResultFlow({ answers, onBack }) {
   const [showDownloadPage, setShowDownloadPage] = useState(false);
   const missionTimer = useRef(null);
   const barrierScores = useMemo(() => getBarrierScores(answers), [answers]);
-  const result = useMemo(() => getResultPattern(barrierScores), [barrierScores]);
+  const result = useMemo(() => getResultPattern(answers), [answers]);
   const hasLostYearsBlock = useMemo(() => shouldShowLostYearsBlock(answers), [answers]);
 
   useLayoutEffect(() => {
@@ -1227,7 +1219,7 @@ export default function ResultFlow({ answers, onBack }) {
     setDownloadContact({
       email: contact.email,
       firstName: contact.firstName,
-      resultName: result.name,
+      resultKey: result.id,
     });
 
     if (contact.shouldShowDownloadPage) {
@@ -1264,7 +1256,7 @@ export default function ResultFlow({ answers, onBack }) {
       {showDownloadPage ? (
         <DownloadHub
           firstName={downloadContact?.firstName}
-          resultPattern={downloadContact?.resultName ?? result.name}
+          resultKey={downloadContact?.resultKey ?? result.id}
           selectedPace={selectedPace}
         />
       ) : screen4StepIndex === 0 ? (

@@ -1,34 +1,30 @@
-export const defaultResultPattern = 'The “I Don’t Know What to Say” Pattern';
+import { RESULT_CONFIG, RESULT_KEYS } from './resultFlow.js';
+
+export const defaultResultKey = RESULT_KEYS.bodyReaction;
 
 // Place final PDF files in public/downloads using the exact file names listed above.
 export const downloadFilePaths = {
   fieldGuides: {
-    bodyReaction: '/downloads/day-0-field-guide-functional-bypass.pdf',
-    conversationFreeze: '/downloads/day-0-field-guide-curiosity-drop.pdf',
-    longTermAvoider: '/downloads/day-0-field-guide-hold-your-ground.pdf',
+    [RESULT_KEYS.bodyReaction]: RESULT_CONFIG[RESULT_KEYS.bodyReaction].fieldGuidePdf,
+    [RESULT_KEYS.skillGapFreeze]: RESULT_CONFIG[RESULT_KEYS.skillGapFreeze].fieldGuidePdf,
+    [RESULT_KEYS.longTermAvoider]: RESULT_CONFIG[RESULT_KEYS.longTermAvoider].fieldGuidePdf,
   },
   foundationGuide: '/downloads/reentera-foundation-guide.pdf',
   proofLog: '/downloads/the-proof-log.pdf',
 };
 
-const downloadAssignments = {
-  'The Long-Term Avoider': {
-    fieldGuideHref: downloadFilePaths.fieldGuides.longTermAvoider,
-    missionName: 'The Hold Your Ground Rep',
-    resultPattern: 'The Long-Term Avoider',
-  },
-  [defaultResultPattern]: {
-    fieldGuideHref: downloadFilePaths.fieldGuides.conversationFreeze,
-    missionName: 'The Curiosity Drop Rep',
-    resultPattern: defaultResultPattern,
-  },
-  'The Body-Reaction Pattern': {
-    fieldGuideHref: downloadFilePaths.fieldGuides.bodyReaction,
-    missionName: 'The Functional Bypass Rep',
-    resultPattern: 'The Body-Reaction Pattern',
-  },
-};
+const downloadAssignments = Object.fromEntries(
+  Object.entries(RESULT_CONFIG).map(([resultKey, config]) => [
+    resultKey,
+    {
+      fieldGuideHref: config.fieldGuidePdf,
+      missionName: config.missionName,
+      resultKey,
+      resultPattern: config.displayTitle,
+    },
+  ]),
+);
 
-export function getDownloadAssignment(resultPattern) {
-  return downloadAssignments[resultPattern] ?? downloadAssignments[defaultResultPattern];
+export function getDownloadAssignment(resultKey) {
+  return downloadAssignments[resultKey] ?? downloadAssignments[defaultResultKey];
 }

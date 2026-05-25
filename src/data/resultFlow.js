@@ -37,35 +37,57 @@ export const barrierGroups = [
   },
 ];
 
-export const resultPatterns = {
-  longTermAvoider: {
-    id: 'longTermAvoider',
-    name: 'The Long-Term Avoider',
-    badge: 'High Avoidance',
-    mission: 'The Hold Your Ground Rep',
-    barrierKeys: ['socialAvoidance', 'fearOfBeingJudged'],
-    explanation:
-      'Your answers suggest that avoidance is doing most of the damage right now. You may still function in daily life, but you avoid eye contact, small talk, and extra interaction because being seen feels unsafe.',
-  },
-  conversationFreeze: {
-    id: 'conversationFreeze',
-    name: 'The “I Don’t Know What to Say” Pattern',
+export const RESULT_KEYS = {
+  skillGapFreeze: 'skill_gap_freeze',
+  longTermAvoider: 'long_term_avoider',
+  bodyReaction: 'body_reaction',
+};
+
+export const LOST_YEARS_FLAG_KEY = 'lost_years_flag';
+
+export const RESULT_CONFIG = {
+  [RESULT_KEYS.skillGapFreeze]: {
+    displayTitle: 'The “I Don’t Know What to Say” Pattern',
     badge: 'Conversation Freeze',
-    mission: 'The Drop a Statement Rep',
-    barrierKeys: ['basicSocialSkillsGap', 'lowSelfDiscipline'],
+    fieldMissionTitle: 'Day 0 — The "Curiosity Drop" Rep',
+    missionName: 'The Curiosity Drop Rep',
+    fieldGuidePdf: '/downloads/day-0-field-guide-curiosity-drop.pdf',
     explanation:
       'Your answers suggest that the main block is conversation freeze. You may avoid people because you feel like you missed the basic social script and don’t know what to say next.',
   },
-  bodyReaction: {
-    id: 'bodyReaction',
-    name: 'The Body-Reaction Pattern',
+  [RESULT_KEYS.longTermAvoider]: {
+    displayTitle: 'The Long-Term Avoider',
+    badge: 'High Avoidance',
+    fieldMissionTitle: 'Day 0 — The "Hold Your Ground" Rep',
+    missionName: 'The Hold Your Ground Rep',
+    fieldGuidePdf: '/downloads/day-0-field-guide-hold-your-ground.pdf',
+    explanation:
+      'Your answers suggest that avoidance is doing most of the damage right now. You may still function in daily life, but you avoid eye contact, small talk, and extra interaction because being seen feels unsafe.',
+  },
+  [RESULT_KEYS.bodyReaction]: {
+    displayTitle: 'The Body-Reaction Pattern',
     badge: 'Body Reaction',
-    mission: 'The Awkward Is Allowed Rep',
-    barrierKeys: ['freezingAroundWomen', 'physicalAnxietySymptoms'],
+    fieldMissionTitle: 'Day 0 — The "Functional Bypass" Rep',
+    missionName: 'The Functional Bypass Rep',
+    fieldGuidePdf: '/downloads/day-0-field-guide-functional-bypass.pdf',
     explanation:
       'Your answers suggest that your body reacts before you can act. Your heart races, your face gets hot, or your mind goes blank, especially when the moment feels socially important.',
   },
 };
+
+export const resultPatterns = Object.fromEntries(
+  Object.entries(RESULT_CONFIG).map(([id, config]) => [
+    id,
+    {
+      id,
+      name: config.displayTitle,
+      displayTitle: config.displayTitle,
+      badge: config.badge,
+      mission: config.missionName,
+      explanation: config.explanation,
+    },
+  ]),
+);
 
 export const insightCards = [
   {
@@ -132,32 +154,47 @@ const averageAnswerValues = (answers, questionIndexes) => {
   return values.reduce((sum, value) => sum + value, 0) / values.length;
 };
 
+const answerValue = (answers, index) => Number(answers[index]) || 0;
+
 export const getBarrierScores = (answers) =>
   barrierGroups.map((group) => ({
     ...group,
     score: averageAnswerValues(answers, group.questionIndexes),
   }));
 
-export const getResultPattern = (barrierScores) => {
-  const strongestScore = Math.max(...barrierScores.map(({ score }) => score));
-  const strongestKeys = barrierScores
-    .filter(({ score }) => score === strongestScore)
-    .map(({ key }) => key);
+export const getMainResultScores = (answers) => ({
+  [RESULT_KEYS.skillGapFreeze]: (answerValue(answers, 0) + answerValue(answers, 1)) * 2,
+  [RESULT_KEYS.longTermAvoider]:
+    answerValue(answers, 2) +
+    answerValue(answers, 3) +
+    answerValue(answers, 4) +
+    answerValue(answers, 5),
+  [RESULT_KEYS.bodyReaction]:
+    answerValue(answers, 6) +
+    answerValue(answers, 7) +
+    answerValue(answers, 8) +
+    answerValue(answers, 9),
+});
 
-  if (
-    strongestKeys.some((key) => resultPatterns.bodyReaction.barrierKeys.includes(key))
-  ) {
-    return resultPatterns.bodyReaction;
-  }
+export const resultTieBreakPriority = [
+  RESULT_KEYS.bodyReaction,
+  RESULT_KEYS.longTermAvoider,
+  RESULT_KEYS.skillGapFreeze,
+];
 
-  if (
-    strongestKeys.some((key) => resultPatterns.longTermAvoider.barrierKeys.includes(key))
-  ) {
-    return resultPatterns.longTermAvoider;
-  }
+export const getResultKey = (answers) => {
+  const scores = getMainResultScores(answers);
+  const highestScore = Math.max(...Object.values(scores));
 
-  return resultPatterns.conversationFreeze;
+  return resultTieBreakPriority.find((key) => scores[key] === highestScore);
 };
 
-export const shouldShowLostYearsBlock = (answers) =>
+export const getResultPattern = (answers) => {
+  const resultKey = getResultKey(answers) ?? RESULT_KEYS.bodyReaction;
+  return resultPatterns[resultKey];
+};
+
+export const getLostYearsFlag = (answers) =>
   [answers[12], answers[13]].some((answer) => Number(answer) >= 4);
+
+export const shouldShowLostYearsBlock = getLostYearsFlag;
