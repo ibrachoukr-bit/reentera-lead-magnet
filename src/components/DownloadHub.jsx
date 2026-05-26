@@ -7,38 +7,20 @@ import {
   FileText,
   LockKeyhole,
 } from 'lucide-react';
+import { downloadHubCopy } from '../copy/downloadHubCopy.js';
 import { getDownloadAssignment, downloadFilePaths } from '../data/downloadHub.js';
 import { paceOptions } from '../data/resultFlow.js';
 
-const downloadCardCopy = [
-  {
-    ariaLabel: 'Download your personalized Day 0 Field Guide PDF',
-    description: 'Your assigned mission, where to do it, and what counts as a win.',
-    icon: Compass,
-    key: 'fieldGuide',
-    title: 'Day 0 Field Guide',
-    buttonLabel: 'Download Field Guide',
-  },
-  {
-    ariaLabel: 'Download the Proof Log PDF',
-    description: 'Use this after the rep to record what actually happened and collect proof.',
-    href: downloadFilePaths.proofLog,
-    icon: ClipboardCheck,
-    key: 'proofLog',
-    title: 'Proof Log',
-    buttonLabel: 'Download Proof Log',
-  },
-  {
-    ariaLabel: 'Download the Foundation Guide PDF',
-    description:
-      'Read this after Day 0 to understand the method behind social re-entry, reps, proof, and rebuilding confidence.',
-    href: downloadFilePaths.foundationGuide,
-    icon: BookOpen,
-    key: 'foundationGuide',
-    title: 'Foundation Guide',
-    buttonLabel: 'Download Foundation Guide',
-  },
-];
+const downloadIcons = {
+  book: BookOpen,
+  clipboard: ClipboardCheck,
+  compass: Compass,
+};
+
+const downloadHrefByKey = {
+  foundationGuide: downloadFilePaths.foundationGuide,
+  proofLog: downloadFilePaths.proofLog,
+};
 
 function getPaceTitle(selectedPace) {
   return paceOptions.find((option) => option.id === selectedPace)?.title;
@@ -47,9 +29,9 @@ function getPaceTitle(selectedPace) {
 export function MissionSummaryCard({ missionName, resultPattern, selectedPace }) {
   const paceTitle = getPaceTitle(selectedPace);
   const rows = [
-    ['Result Pattern', resultPattern],
-    ['Mission', missionName],
-    ['Starting Pace', paceTitle],
+    [downloadHubCopy.missionSummary.labels.resultPattern, resultPattern],
+    [downloadHubCopy.missionSummary.labels.mission, missionName],
+    [downloadHubCopy.missionSummary.labels.startingPace, paceTitle],
   ].filter(([, value]) => Boolean(value));
 
   return (
@@ -61,10 +43,10 @@ export function MissionSummaryCard({ missionName, resultPattern, selectedPace })
             <LockKeyhole className="h-5 w-5 stroke-[1.7]" aria-hidden="true" />
           </div>
           <h2 className="mt-4 font-heading text-[1.28rem] font-semibold leading-tight text-midnight sm:text-[1.45rem]">
-            Your Assigned Mission
+            {downloadHubCopy.missionSummary.title}
           </h2>
           <p className="mt-2 max-w-[22rem] text-[1rem] leading-6 text-graphite/[0.64]">
-            Do not make it impressive. Make it completed.
+            {downloadHubCopy.missionSummary.reminder}
           </p>
         </div>
 
@@ -121,18 +103,11 @@ export function DownloadCard({ ariaLabel, buttonLabel, description, href, icon: 
 }
 
 export function NextStepsBlock() {
-  const steps = [
-    'Download your Field Guide.',
-    'Complete the smallest version of your Day 0 rep.',
-    'Open the Proof Log and write what actually happened.',
-    'Read the Foundation Guide when you are ready to understand the full method.',
-  ];
-
   return (
     <section className="rounded-[1.35rem] border border-olive/[0.15] bg-olive/[0.075] p-5 shadow-[0_18px_56px_rgba(15,36,55,0.06),inset_0_1px_0_rgba(255,255,255,0.62)] sm:p-6 lg:p-7">
-      <h2 className="font-heading text-[1.35rem] font-semibold text-midnight">What to do next</h2>
+      <h2 className="font-heading text-[1.35rem] font-semibold text-midnight">{downloadHubCopy.nextSteps.title}</h2>
       <ol className="mt-5 grid gap-3.5">
-        {steps.map((step, index) => (
+        {downloadHubCopy.nextSteps.steps.map((step, index) => (
           <li key={step} className="flex gap-3.5 text-[1rem] leading-7 text-graphite/[0.7]">
             <span className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-paper/[0.84] font-heading text-[0.9rem] font-semibold text-olive ring-1 ring-olive/[0.14]">
               {index + 1}
@@ -142,7 +117,7 @@ export function NextStepsBlock() {
         ))}
       </ol>
       <p className="mt-5 font-heading text-[1.08rem] font-semibold text-midnight">
-        One rep is proof. The ladder comes next.
+        {downloadHubCopy.nextSteps.closingLine}
       </p>
     </section>
   );
@@ -155,22 +130,20 @@ export function ProductBridgeBlock() {
       <div className="relative flex h-full flex-col justify-between">
         <div>
           <h2 className="font-heading text-[1.55rem] font-semibold leading-[1.12] text-paper sm:text-[1.72rem]">
-            Day 0 gives you proof. The 8-week system gives you the ladder.
+            {downloadHubCopy.productBridge.title}
           </h2>
           <p className="mt-4 text-[1.03rem] leading-8 text-paper/[0.72] sm:text-[1.08rem]">
-            Today, you are not trying to fix your whole social life. You are collecting the first
-            data point. If this felt useful, the full ReEntera system shows you what to do next for
-            the next 8 weeks.
+            {downloadHubCopy.productBridge.text}
           </p>
         </div>
 
         <div className="mt-7 flex border-t border-paper/[0.1] pt-5 sm:justify-end">
           <a
             href="#"
-            aria-label="See the 8-Week Social Re-Entry System"
+            aria-label={downloadHubCopy.productBridge.ctaAriaLabel}
             className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl border border-paper/[0.14] bg-paper/[0.08] px-5 py-3 font-heading text-[0.96rem] font-semibold text-paper shadow-[inset_0_1px_0_rgba(245,243,238,0.1)] transition duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:bg-paper/[0.12] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-paper active:translate-y-0 sm:w-auto"
           >
-            <span>See the 8-Week Social Re-Entry System →</span>
+            <span>{downloadHubCopy.productBridge.cta}</span>
           </a>
         </div>
       </div>
@@ -187,9 +160,10 @@ export default function DownloadHub({
   const assignment = getDownloadAssignment(resultKey);
   const missionName = assignedMission ?? assignment.missionName;
   const displayResultPattern = assignment.resultPattern;
-  const cards = downloadCardCopy.map((card) => ({
+  const cards = downloadHubCopy.downloads.cards.map((card) => ({
     ...card,
-    href: card.href ?? assignment.fieldGuideHref,
+    href: downloadHrefByKey[card.key] ?? assignment.fieldGuideHref,
+    icon: downloadIcons[card.iconKey],
   }));
 
   return (
@@ -199,17 +173,19 @@ export default function DownloadHub({
       <div className="mx-auto w-full max-w-[60rem] px-4 sm:px-6">
         <div>
           <p className="inline-flex rounded-full border border-olive/[0.18] bg-olive/[0.08] px-3.5 py-1.5 text-[0.77rem] font-bold uppercase tracking-[0.08em] text-olive shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]">
-            DAY 0 GEAR UNLOCKED
+            {downloadHubCopy.badge}
           </p>
           <h1 className="mt-5 max-w-[44rem] font-heading text-[2.45rem] font-semibold leading-[1.02] tracking-normal text-midnight sm:text-[3.35rem] lg:text-[3.7rem]">
-            Your Day 0 Gear Is Ready
+            {downloadHubCopy.headline}
           </h1>
           <p className="mt-5 max-w-[43rem] text-[1.08rem] leading-8 text-graphite/[0.68] sm:text-[1.18rem]">
-            Download the tools, complete your rep, and come back to log what actually happened.
+            {downloadHubCopy.subheadline}
           </p>
           {firstName ? (
             <p className="mt-4 max-w-[40rem] font-heading text-[1.08rem] font-semibold leading-7 text-midnight/[0.82]">
-              Nice work, {firstName}. Your first rep is now assigned.
+              {downloadHubCopy.personalLine.prefix}
+              {firstName}
+              {downloadHubCopy.personalLine.suffix}
             </p>
           ) : null}
         </div>
@@ -226,18 +202,18 @@ export default function DownloadHub({
           <div className="flex items-end justify-between gap-5">
             <div>
               <h2 className="font-heading text-[1.65rem] font-semibold leading-tight text-midnight sm:text-[2rem]">
-                Download Your Tools
+                {downloadHubCopy.downloads.title}
               </h2>
               <p className="mt-2 max-w-[33rem] text-[1rem] leading-7 text-graphite/[0.62]">
-                Keep these open before and after the rep. The order matters less than completion.
+                {downloadHubCopy.downloads.subtitle}
               </p>
             </div>
             <CheckCircle2 className="hidden h-7 w-7 shrink-0 text-olive/70 sm:block" aria-hidden="true" />
           </div>
 
           <div className="mt-5 grid gap-4 md:grid-cols-3 md:gap-5">
-            {cards.map((card) => (
-              <DownloadCard key={card.key} {...card} />
+            {cards.map(({ key, ...card }) => (
+              <DownloadCard key={key} {...card} />
             ))}
           </div>
         </div>
@@ -248,7 +224,7 @@ export default function DownloadHub({
         </div>
 
         <p className="mt-8 border-t border-midnight/[0.09] pt-5 text-[0.95rem] font-semibold leading-6 text-graphite/[0.52]">
-          Your tools are unlocked. Save this page or use the backup link from your email later.
+          {downloadHubCopy.footer}
         </p>
       </div>
     </section>

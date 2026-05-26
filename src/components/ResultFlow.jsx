@@ -24,131 +24,35 @@ import {
   paceOptions,
   shouldShowLostYearsBlock,
 } from '../data/resultFlow.js';
+import { missionCopy } from '../copy/missionCopy.js';
+import { resultsCopy } from '../copy/resultsCopy.js';
 import DownloadHub from './DownloadHub.jsx';
 
 const resultStepCount = 3;
 const screen4StepCount = 2;
 const missionPlaceholderDelay = 250;
 
-const preFlightCards = [
-  {
-    Icon: Wind,
-    title: '1. The Anchor Breath (Kill the Jitters)',
-    mechanic: 'Do 3 rounds of Box Breathing (Inhale 4s, Hold 4s, Exhale 4s, Hold 4s).',
-    goal: 'Force your heart rate down. This eliminates the "shaky" feeling in your chest and grounds your nervous system.',
-  },
-  {
-    Icon: PersonStanding,
-    title: '2. The "Un-Shrink" Posture (Command Space)',
-    mechanic: 'Stand up. Roll your shoulders back, drop them down, and lift your chest. Keep your chin level with the ground.',
-    goal: 'Anxiety forces you to fold inward to protect yourself. By physically opening your chest, you send an undeniable signal to your brain that you are safe, solid, and confident.',
-  },
-  {
-    Icon: Mic2,
-    title: '3. The Vocal Anchor (Mirror Muscle-Memory)',
-    mechanic: "Look in the mirror. Stand tall and say your exact Day 0 script out loud 3 times. Speak from your chest, not your throat.",
-    goal: "A shaky voice destroys internal confidence. Rehearsing out loud builds immediate muscle memory so your voice doesn't crack when the adrenaline hits.",
-  },
-  {
-    Icon: Eye,
-    title: '4. The Visual Anchor (Mirror Muscle-Memory)',
-    mechanic: 'Look in the mirror. Pick any random object in your room (a mug, your keys, a remote). Stand tall and state exactly what it is out loud, 3 times in a row. Example: "This is a black coffee mug." Speak firmly from your chest, not your throat.',
-    goal: 'When you feel exposed in public, your instinct is to dart your eyes to the floor (which signals submission and fear to your brain). Rehearsing eye contact with yourself builds the muscle memory to keep your head up when strangers glance at you.',
-  },
-];
-
-const missionVariants = {
-  [RESULT_KEYS.longTermAvoider]: {
-    badge: 'STEP 2: THE FIELD MISSION',
-    missionTitle: RESULT_CONFIG[RESULT_KEYS.longTermAvoider].fieldMissionTitle,
-    heading: 'Do Not Make It Impressive. Make It Completed.',
-    briefing: [
-      'The Mechanical Truth: Confidence is not a personality trait you are born with; it is the automatic byproduct of accumulated wins. And wins are built by movement, not perfection.',
-      'Your brain changes when you collect data points of survival. If you wait until you feel "ready" or "smooth," you will wait another decade. Today, your only goal is to move. An awkward, shaking, imperfect rep counts as a 100% victory. Avoidance is the only failure.',
-    ],
-    missionOfDay: [
-      'Your mission today is to go to a public place and simply exist there for 3 to 5 minutes without using your phone as a shield. You do not need to speak to anyone; your only job is to tolerate the physical presence of others and prove to your nervous system that it is safe to be seen. Focus entirely on staying present, not on looking perfectly relaxed.',
-    ],
-    bestPlaces: [
-      'The checkout line at a mainstream grocery store.',
-      'A local coffee shop while waiting for an order.',
-      'The break room or elevator lobby at your workplace.',
-    ],
-    bestPlaceNote: '(Choose a place where people naturally ignore each other).',
-    scenario: [
-      'You walk into a busy coffee shop to grab a drink. Normally, the second you get in line, you pull out your phone to scroll and avoid making eye contact.',
-      'Today, you leave your phone in your pocket and deploy your tools. As you stand in line, you activate your "Open Heart" posture—shoulders back, chest up. You feel the physical exposure kicking in, so you silently start your Box Breathing to kill the jitters.',
-      'If a stranger glances at you, do not dart your eyes to the floor in a panic. Rely on your Visual Anchor training: just let them look, keep your head up, and slowly look away. You successfully held your ground using your physical mechanics, without escaping into a screen.',
-    ],
-    proofRule: [
-      'You are not trying to look cool, confident, or outgoing. You are simply collecting one data point that nothing catastrophic happens when you stand still. Awkwardness is not failure; escaping to your phone is. If you stay off the screen for 3 minutes, you win. Say to yourself: "I did it. It counted."',
-    ],
-    bridgeLead:
-      'The Reality Check: Completing this rep today proves you can take action. One rep is proof. But rebuilding your social life needs a ladder.',
-    bridgeQuote:
-      'You cannot fix a decade of isolation with one coffee shop visit. To build permanent muscle memory so you never have to overthink or rely on willpower again, you need the complete 8-Week Social Re-Entry System.',
-  },
-  [RESULT_KEYS.skillGapFreeze]: {
-    badge: 'STEP 2: THE FIELD MISSION',
-    missionTitle: RESULT_CONFIG[RESULT_KEYS.skillGapFreeze].fieldMissionTitle,
-    heading: 'Do Not Make It Impressive. Make It Completed.',
-    briefing: [
-      'The Mechanical Truth: Confidence is not a personality trait you are born with; it is the automatic byproduct of accumulated wins. And wins are built by movement, not perfection.',
-      'Your brain changes when you collect data points of survival. If you wait until you feel "ready" or "smooth," you will wait another decade. Today, your only goal is to move. An awkward, shaking, imperfect rep counts as a 100% victory. Avoidance is the only failure.',
-    ],
-    missionOfDay: [
-      'Your mission today is to test a mechanical rule of conversation: "Be interested, not interesting." When you lack social skills, you often freeze because you think you need to be entertaining, charismatic, or have a perfect story. You don\'t. Your only job today is to ask one simple, situational question to pass the conversational ball to the other person.',
-    ],
-    bestPlaces: [
-      'The checkout counter at a grocery store or pharmacy.',
-      'A local coffee shop when paying for your order.',
-    ],
-    bestPlaceNote:
-      '(Why? Because interacting with service workers is a "closed-loop system." The conversation has a built-in, natural ending, which removes the pressure of having to keep it going).',
-    scenario: [
-      'You are buying a coffee or paying for groceries. Normally, you stick to the robotic script: "Hi" and "Thanks," keeping your shoulders hunched and your voice quiet.',
-      'Today, you deploy your tools. As you wait in line, you lock in your "Open Heart" posture to physically signal confidence, and you use your Anchor Breath to kill the pre-interaction jitters.',
-      'As they hand you the receipt, you don\'t need to think; you rely on the Vocal Anchor you practiced earlier. Because your muscle memory is primed, your voice doesn\'t crack when you look up and drop the situational question: "Has it been this busy all day?" They will likely give a 5-second answer (e.g., "Oh man, yeah, it doesn\'t stop until 2 PM"). You simply nod, say, "Got it, hang in there," and walk away. You successfully executed small talk using pure mechanics, without needing to be "charming."',
-    ],
-    proofRule: [
-      'You are not trying to make a new friend or have a deep 5-minute chat. You are simply proving that a conversation can be easily sustained just by being curious about the other person. If you asked the question and listened to the answer, you win. Say to yourself: "I did it. The mechanic worked."',
-    ],
-    bridgeLead:
-      'The Reality Check: Completing this rep today proves you can initiate. One rep is proof. But rebuilding your social life needs a ladder.',
-    bridgeQuote:
-      'Knowing one conversational trick won\'t make you socially fluent. To learn the complete mechanics of human connection—how to transition from small talk to deep talk, how to read body language, and how to never run out of things to say—you need the complete 8-Week Social Re-Entry System.',
-  },
-  [RESULT_KEYS.bodyReaction]: {
-    badge: 'STEP 2: THE FIELD MISSION',
-    missionTitle: RESULT_CONFIG[RESULT_KEYS.bodyReaction].fieldMissionTitle,
-    heading: 'Do Not Make It Impressive. Make It Completed.',
-    briefing: [
-      'The Mechanical Truth: Confidence is not a personality trait you are born with; it is the automatic byproduct of accumulated wins. And wins are built by movement, not perfection.',
-      'Your brain changes when you collect data points of survival. If you wait until you feel "ready" or "smooth," you will wait another decade. Today, your only goal is to move. An awkward, shaking, imperfect rep counts as a 100% victory. Avoidance is the only failure.',
-    ],
-    missionOfDay: [
-      'Your mission today is to intentionally trigger your physical anxiety around a woman, and simply let it happen. You are not trying to be charming, and you are absolutely not flirting. You are going to use a "Functional Bypass"—asking a strictly informational question to prove to your nervous system that a spike in heart rate is uncomfortable, but not dangerous.',
-    ],
-    bestPlaces: [
-      'A busy coffee shop counter or pick-up area.',
-      'The aisles of a mainstream grocery store.',
-    ],
-    bestPlaceNote:
-      '(These environments naturally demand short, functional interactions, completely removing the "creepy" factor).',
-    scenario: [
-      'You are in a store or cafe. You see a woman nearby, and you feel that familiar heat in your chest or throat. Normally, you would immediately hunch your shoulders, dart your eyes to the floor, and retreat.',
-      'Today, you deploy your tools and lean into the spike. Before you take a step, you lock in your "Open Heart" posture, physically refusing your body\'s urge to shrink and hide. As the adrenaline hits, you start your Anchor Breath to keep your heart rate from spiraling completely out of control.',
-      'You step slightly closer, keep a respectful distance, and rely on your Visual Anchor training. Instead of staring at the floor in panic, you keep your head up, make brief, normal eye contact, and ask a purely functional question: "Excuse me, are you in line for the register?" She answers. You simply say, "Thanks," and turn back around. You intentionally triggered the panic, but you controlled it using pure physical mechanics.',
-    ],
-    proofRule: [
-      'The goal is NOT to feel calm. If your heart races, your face gets hot, or you stutter slightly, you are doing the rep perfectly. Physical panic is the workout, not the enemy. If you asked the question and survived the physical spike without running away, you win. Say to yourself: "I did it. The panic spiked, but I survived."',
-    ],
-    bridgeLead:
-      'The Reality Check: Completing this rep today proves your body can withstand the panic trigger. One rep is proof. But rebuilding your social life needs a ladder.',
-    bridgeQuote:
-      'You cannot permanently rewire a hyperactive nervous system with one question. To completely eliminate the freeze response, stop the physical symptoms before they start, and learn how to comfortably hold space around women, you need the complete 8-Week Social Re-Entry System.',
-  },
+const preFlightIcons = {
+  posture: PersonStanding,
+  visual: Eye,
+  vocal: Mic2,
+  wind: Wind,
 };
+
+const preFlightCards = missionCopy.preFlightCards.map((card) => ({
+  ...card,
+  Icon: preFlightIcons[card.iconKey],
+}));
+
+const missionVariants = Object.fromEntries(
+  Object.entries(missionCopy.fieldMissions).map(([resultKey, mission]) => [
+    resultKey,
+    {
+      ...mission,
+      missionTitle: RESULT_CONFIG[resultKey].fieldMissionTitle,
+    },
+  ]),
+);
 
 function resetViewportPosition() {
   window.scrollTo(0, 0);
@@ -162,7 +66,7 @@ function resetViewportPosition() {
 }
 
 function ResultHeader({
-  ariaLabel = 'Result step',
+  ariaLabel = resultsCopy.resultHeader.resultStepAriaLabel,
   backAriaLabel,
   countLabel,
   onBack,
@@ -181,14 +85,16 @@ function ResultHeader({
           className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-midnight/[0.1] bg-paper/[0.72] text-midnight shadow-[0_12px_32px_rgba(15,36,55,0.07),inset_0_1px_0_rgba(255,255,255,0.72)] transition duration-200 ease-out hover:-translate-y-0.5 hover:border-olive/30 hover:bg-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-olive active:translate-y-0"
           aria-label={
             backAriaLabel ??
-            (stepIndex === 0 ? 'Return to the final assessment question' : 'Go to previous result screen')
+            (stepIndex === 0
+              ? resultsCopy.resultHeader.returnToFinalQuestion
+              : resultsCopy.resultHeader.previousResultScreen)
           }
         >
           <ArrowLeft className="h-[1.125rem] w-[1.125rem]" aria-hidden="true" />
         </button>
 
         <p className="min-w-0 text-center font-heading text-[1.02rem] font-semibold tracking-[0.01em] text-midnight">
-          ReEntera
+          {resultsCopy.resultHeader.brand}
         </p>
 
         <p
@@ -252,14 +158,14 @@ function PrepCard({ card }) {
           <div className="mt-5 grid gap-4 lg:grid-cols-2 lg:gap-6">
             <div>
               <p className="text-[0.76rem] font-bold uppercase tracking-[0.08em] text-olive">
-                The Mechanic:
+                {missionCopy.preFlight.mechanicLabel}
               </p>
               <p className="mt-1.5 text-[1.02rem] leading-7 text-graphite/[0.72]">{mechanic}</p>
             </div>
 
             <div>
               <p className="text-[0.76rem] font-bold uppercase tracking-[0.08em] text-clay">
-                The Goal:
+                {missionCopy.preFlight.goalLabel}
               </p>
               <p className="mt-1.5 text-[1.02rem] leading-7 text-graphite/[0.72]">{goal}</p>
             </div>
@@ -277,13 +183,13 @@ function PreFlightRoutineScreen({ onNext }) {
 
       <div className="mx-auto max-w-[53rem]">
         <p className="inline-flex rounded-full border border-olive/[0.18] bg-olive/[0.08] px-3.5 py-1.5 text-[0.77rem] font-bold uppercase tracking-[0.08em] text-olive shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]">
-          STEP 1: PRE-FLIGHT CHECKLIST
+          {missionCopy.preFlight.eyebrow}
         </p>
         <h1 className="mt-5 max-w-[45rem] font-heading text-[2.35rem] font-semibold leading-[1.02] tracking-normal text-midnight sm:text-[3.2rem] lg:text-[3.45rem]">
-          Break The "Shrink" Reflex
+          {missionCopy.preFlight.title}
         </h1>
         <p className="mt-5 max-w-[47rem] text-[1.08rem] leading-8 text-graphite/[0.68] sm:text-[1.18rem]">
-          Your Day 0 Mission is ready. But before you step outside, you must reset your physical state. Anxiety makes your body shrink and your breathing shallow, which tricks your brain into feeling weak. Take exactly 2 minutes to anchor your nervous system.
+          {missionCopy.preFlight.subtitle}
         </p>
       </div>
 
@@ -299,7 +205,7 @@ function PreFlightRoutineScreen({ onNext }) {
           onClick={onNext}
           className="group flex min-h-14 w-full items-center justify-center gap-2 rounded-2xl bg-clay px-6 py-4 font-heading text-[0.98rem] font-semibold uppercase tracking-[0.02em] text-paper shadow-[0_18px_42px_rgba(143,94,61,0.24)] transition duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:bg-[#D0A587] hover:shadow-[0_24px_54px_rgba(143,94,61,0.28)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-paper active:translate-y-0 sm:w-auto"
         >
-          <span>I AM ANCHORED. SHOW ME THE MISSION</span>
+          <span>{missionCopy.preFlight.cta}</span>
           <ArrowRight className="h-4 w-4 transition duration-300 ease-out group-hover:translate-x-1" aria-hidden="true" />
         </button>
       </div>
@@ -321,8 +227,8 @@ function TacticalBriefing({ mission }) {
         </div>
         <div className="max-w-[47rem] space-y-4 text-[1.04rem] leading-7 text-graphite/[0.74] sm:text-[1.08rem] sm:leading-8">
           <p>
-            <span className="font-bold text-midnight">The Mechanical Truth:</span>{' '}
-            {mission.briefing[0].replace('The Mechanical Truth: ', '')}
+            <span className="font-bold text-midnight">{missionCopy.missionSections.tacticalTruthLabel}</span>{' '}
+            {mission.briefing[0].replace(`${missionCopy.missionSections.tacticalTruthLabel} `, '')}
           </p>
           <p>{mission.briefing[1]}</p>
         </div>
@@ -356,13 +262,13 @@ function MissionCard({ mission }) {
     <section className="relative overflow-hidden rounded-[1.55rem] bg-midnight p-5 text-paper shadow-[0_34px_110px_rgba(15,36,55,0.26),0_12px_34px_rgba(15,36,55,0.12)] ring-1 ring-paper/60 sm:p-6 lg:rounded-[2rem] lg:p-8">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-80 rounded-[inherit] bg-[radial-gradient(circle_at_13%_4%,rgba(245,243,238,0.11),rgba(245,243,238,0)_38%),radial-gradient(circle_at_91%_4%,rgba(200,155,123,0.15),rgba(200,155,123,0)_45%)]" />
       <div className="relative space-y-7">
-        <MissionSection Icon={Target} title="Mission of the Day">
+        <MissionSection Icon={Target} title={missionCopy.missionSections.missionOfDay}>
           {mission.missionOfDay.map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>
           ))}
         </MissionSection>
 
-        <MissionSection Icon={MapPin} title="Best Place to Do It">
+        <MissionSection Icon={MapPin} title={missionCopy.missionSections.bestPlace}>
           <ul className="space-y-2.5">
             {mission.bestPlaces.map((place) => (
               <li key={place} className="flex gap-3">
@@ -376,13 +282,13 @@ function MissionCard({ mission }) {
           <p>{mission.bestPlaceNote}</p>
         </MissionSection>
 
-        <MissionSection Icon={MessageCircle} title="The Scenario">
+        <MissionSection Icon={MessageCircle} title={missionCopy.missionSections.scenario}>
           {mission.scenario.map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>
           ))}
         </MissionSection>
 
-        <MissionSection Icon={ShieldCheck} title={'The "Proof" Rule'}>
+        <MissionSection Icon={ShieldCheck} title={missionCopy.missionSections.proofRule}>
           {mission.proofRule.map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>
           ))}
@@ -418,17 +324,17 @@ function SuccessModalState({ onContinue }) {
         id="gear-unlock-title"
         className="mt-5 max-w-[23rem] font-heading text-[1.75rem] font-semibold leading-tight text-midnight sm:text-[2rem]"
       >
-        Your Day 0 Gear is unlocked.
+        {missionCopy.emailCapture.successTitle}
       </h2>
       <p className="mt-3 max-w-[24rem] text-[1.02rem] leading-7 text-graphite/[0.66]">
-        Your private download page is ready. We also sent a backup link to your inbox.
+        {missionCopy.emailCapture.successBody}
       </p>
       <button
         type="button"
         onClick={onContinue}
         className="mt-6 flex min-h-14 w-full items-center justify-center rounded-2xl bg-clay px-6 py-4 font-heading text-[1.02rem] font-semibold text-paper shadow-[0_18px_42px_rgba(143,94,61,0.22)] transition duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:bg-[#D0A587] hover:shadow-[0_24px_54px_rgba(143,94,61,0.26)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-midnight active:translate-y-0"
       >
-        Go to My Download Page →
+        {missionCopy.emailCapture.successCta}
       </button>
     </div>
   );
@@ -495,7 +401,7 @@ function EmailCaptureModal({
           type="button"
           onClick={onClose}
           className="absolute right-4 top-4 z-10 grid h-10 w-10 place-items-center rounded-full border border-midnight/[0.09] bg-paper/[0.76] text-midnight shadow-[inset_0_1px_0_rgba(255,255,255,0.72)] transition duration-200 ease-out hover:-translate-y-0.5 hover:border-olive/25 hover:bg-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-olive active:translate-y-0"
-          aria-label="Close email capture"
+          aria-label={missionCopy.emailCapture.closeAriaLabel}
         >
           <X className="h-4 w-4" aria-hidden="true" />
         </button>
@@ -512,20 +418,20 @@ function EmailCaptureModal({
                 id="gear-unlock-title"
                 className="mt-5 max-w-[23rem] font-heading text-[1.75rem] font-semibold leading-tight text-midnight sm:text-[2rem]"
               >
-                Unlock Your Day 0 Gear
+                {missionCopy.emailCapture.title}
               </h2>
               <p className="mt-3 max-w-[23rem] text-[1.03rem] font-semibold leading-7 text-midnight/[0.76]">
-                Enter your name and email to open your private download page.
+                {missionCopy.emailCapture.lead}
               </p>
               <p className="mt-3 max-w-[24rem] text-[1rem] leading-7 text-graphite/[0.66]">
-                You’ll get instant access to your Day 0 Field Guide, Proof Log, and 2-Minute Recovery Tool — plus a backup link sent to your inbox.
+                {missionCopy.emailCapture.body}
               </p>
             </div>
 
             <div className="mt-6 grid gap-4">
               <div>
                 <label htmlFor="day-0-first-name" className="text-[0.82rem] font-bold uppercase tracking-[0.08em] text-olive">
-                  First Name
+                  {missionCopy.emailCapture.firstNameLabel}
                 </label>
                 <input
                   ref={firstNameRef}
@@ -533,7 +439,7 @@ function EmailCaptureModal({
                   type="text"
                   value={firstName}
                   onChange={(event) => onFirstNameChange(event.target.value)}
-                  placeholder="Your first name"
+                  placeholder={missionCopy.emailCapture.firstNamePlaceholder}
                   aria-invalid={Boolean(errors.firstName)}
                   aria-describedby={errors.firstName ? 'day-0-first-name-error' : undefined}
                   className="mt-2 h-14 w-full rounded-2xl border border-midnight/[0.1] bg-paper/[0.78] px-4 text-[1.06rem] font-semibold text-midnight shadow-[inset_0_1px_0_rgba(255,255,255,0.72)] transition duration-200 ease-out placeholder:text-graphite/35 focus:border-olive/45 focus:outline-none focus:ring-4 focus:ring-olive/[0.12]"
@@ -547,14 +453,14 @@ function EmailCaptureModal({
 
               <div>
                 <label htmlFor="day-0-email" className="text-[0.82rem] font-bold uppercase tracking-[0.08em] text-olive">
-                  Email Address
+                  {missionCopy.emailCapture.emailLabel}
                 </label>
                 <input
                   id="day-0-email"
                   type="email"
                   value={email}
                   onChange={(event) => onEmailChange(event.target.value)}
-                  placeholder="Your best email address"
+                  placeholder={missionCopy.emailCapture.emailPlaceholder}
                   aria-invalid={Boolean(errors.email)}
                   aria-describedby={errors.email ? 'day-0-email-error' : undefined}
                   className="mt-2 h-14 w-full rounded-2xl border border-midnight/[0.1] bg-paper/[0.78] px-4 text-[1.06rem] font-semibold text-midnight shadow-[inset_0_1px_0_rgba(255,255,255,0.72)] transition duration-200 ease-out placeholder:text-graphite/35 focus:border-olive/45 focus:outline-none focus:ring-4 focus:ring-olive/[0.12]"
@@ -571,13 +477,13 @@ function EmailCaptureModal({
               type="submit"
               className="mt-5 flex min-h-14 w-full items-center justify-center gap-2 rounded-2xl bg-clay px-6 py-4 font-heading text-[1.02rem] font-semibold text-paper shadow-[0_18px_42px_rgba(143,94,61,0.22)] transition duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:bg-[#D0A587] hover:shadow-[0_24px_54px_rgba(143,94,61,0.26)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-midnight active:translate-y-0"
             >
-              <span>Unlock My Day 0 Gear →</span>
+              <span>{missionCopy.emailCapture.submit}</span>
             </button>
             <p className="mt-3 text-center text-[0.92rem] font-semibold text-graphite/[0.58]">
-              Instant access. Backup link by email. No spam.
+              {missionCopy.emailCapture.reassurance}
             </p>
             <p className="mx-auto mt-2 max-w-[22rem] text-center text-[0.84rem] leading-5 text-graphite/[0.48]">
-              We’ll only use this to send your Day 0 tools and ReEntera follow-up guidance.
+              {missionCopy.emailCapture.privacy}
             </p>
           </form>
         )}
@@ -602,13 +508,13 @@ function MissionScreen({ onDownloadReady, result }) {
     const nextErrors = {};
 
     if (!firstName.trim()) {
-      nextErrors.firstName = 'First name is required.';
+      nextErrors.firstName = missionCopy.emailCapture.firstNameRequired;
     }
 
     if (!email.trim()) {
-      nextErrors.email = 'Email address is required.';
+      nextErrors.email = missionCopy.emailCapture.emailRequired;
     } else if (!isValidEmail(email)) {
-      nextErrors.email = 'Enter a valid email address.';
+      nextErrors.email = missionCopy.emailCapture.emailInvalid;
     }
 
     setErrors(nextErrors);
@@ -673,10 +579,10 @@ function MissionScreen({ onDownloadReady, result }) {
           onClick={() => setModalOpen(true)}
           className="group flex min-h-14 w-full items-center justify-center gap-2 rounded-2xl bg-clay px-6 py-4 font-heading text-[0.98rem] font-semibold uppercase tracking-[0.02em] text-paper shadow-[0_18px_42px_rgba(143,94,61,0.22)] transition duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:bg-[#D0A587] hover:shadow-[0_24px_54px_rgba(143,94,61,0.26)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-midnight active:translate-y-0 sm:w-auto sm:px-8"
         >
-          <span>🎯 ACCEPT MISSION & UNLOCK MY DAY 0 PDF GEAR ➔</span>
+          <span>{missionCopy.missionCta.accept}</span>
         </button>
         <p className="mt-3 text-[0.94rem] font-semibold text-graphite/[0.55]">
-          Takes 10 seconds. Direct download.
+          {missionCopy.missionCta.microcopy}
         </p>
       </div>
 
@@ -713,6 +619,7 @@ function getRadarPoint(index, value, count, radius, center) {
 }
 
 function ResultRadarCard({ barrierScores }) {
+  const { resultProfile } = resultsCopy;
   const center = 126;
   const radius = 88;
   const points = barrierScores.map(({ score }, index) =>
@@ -725,10 +632,10 @@ function ResultRadarCard({ barrierScores }) {
     <div className="rounded-[1.25rem] border border-paper/[0.12] bg-paper/[0.055] p-4 shadow-[inset_0_1px_0_rgba(245,243,238,0.08)] sm:p-5">
       <div className="flex items-center justify-between gap-4">
         <h2 className="font-heading text-[1rem] font-semibold text-paper">
-          Your Current Barriers
+          {resultProfile.radarTitle}
         </h2>
         <span className="rounded-full border border-paper/[0.12] px-2.5 py-1 text-[0.72rem] font-semibold text-paper/[0.58]">
-          Higher = stronger
+          {resultProfile.radarBadge}
         </span>
       </div>
 
@@ -737,7 +644,7 @@ function ResultRadarCard({ barrierScores }) {
           className="mx-auto h-auto w-full max-w-[19rem]"
           viewBox="0 0 252 252"
           role="img"
-          aria-label="Radar chart showing the six current barrier scores"
+          aria-label={resultProfile.radarAriaLabel}
         >
           <defs>
             <radialGradient id="radarGlow" cx="50%" cy="50%" r="50%">
@@ -876,12 +783,14 @@ function InsightCard({ text, title }) {
 }
 
 function ResultProfileScreen({ barrierScores, hasLostYearsBlock, onNext, result }) {
+  const { resultProfile } = resultsCopy;
+
   return (
     <section className="result-flow-motion relative z-10 mx-auto w-full max-w-[60rem] px-5 pb-14 pt-10 sm:px-7 sm:pb-20 sm:pt-12">
       <ScreenIntro
-        eyebrow="Your Day 0 Result"
-        title="Your Social Re-Entry Profile"
-        subtitle="Here’s what is blocking your first step back into social life."
+        eyebrow={resultProfile.eyebrow}
+        title={resultProfile.title}
+        subtitle={resultProfile.subtitle}
         wide
       />
 
@@ -891,7 +800,7 @@ function ResultProfileScreen({ barrierScores, hasLostYearsBlock, onNext, result 
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <p className="text-[0.78rem] font-bold uppercase tracking-[0.09em] text-paper/[0.54]">
-                Your Starting Pattern
+                {resultProfile.startingPatternLabel}
               </p>
               <h2 className="mt-3 max-w-[36rem] font-heading text-[2rem] font-semibold leading-[1.05] text-paper sm:text-[2.65rem]">
                 {result.name}
@@ -922,31 +831,21 @@ function ResultProfileScreen({ barrierScores, hasLostYearsBlock, onNext, result 
       {hasLostYearsBlock ? (
         <div className="mt-6 rounded-[1.35rem] border border-clay/[0.18] bg-clay/[0.1] p-5 shadow-[0_18px_54px_rgba(15,36,55,0.07),inset_0_1px_0_rgba(255,255,255,0.62)] sm:p-6">
           <h2 className="font-heading text-[1.25rem] font-semibold text-midnight">
-            A note on the lost years
+            {resultProfile.lostYears.title}
           </h2>
           <div className="mt-3 max-w-[48rem] space-y-4 text-[1.03rem] leading-7 text-graphite/[0.68]">
-            <p>
-              Looking back and feeling like you missed normal dating, friendships, and social
-              memories hurts. That weight is real.
-            </p>
-            <p>
-              But those years are not proof that you are broken. For a long time, avoidance may
-              have been the only tool your nervous system had. It protected you short-term, but it
-              also kept you from getting the reps you needed.
-            </p>
-            <p>
-              The regret you feel now is not proof that it is too late. It may be proof that you
-              are finally ready to train.
-            </p>
+            {resultProfile.lostYears.paragraphs.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
           </div>
         </div>
       ) : null}
 
       <div className="mt-6 rounded-[1.35rem] border border-olive/[0.16] bg-paper/[0.78] p-5 shadow-[0_20px_62px_rgba(15,36,55,0.08),inset_0_1px_0_rgba(255,255,255,0.72)] sm:flex sm:items-center sm:justify-between sm:gap-6 sm:p-6">
         <p className="max-w-[36rem] font-heading text-[1.2rem] font-semibold leading-7 text-midnight">
-          You are not broken. You are under-trained.
+          {resultProfile.noteLead}
           <span className="mt-1 block text-[1rem] font-medium text-graphite/[0.62]">
-            The goal today is not confidence. The goal is one completed rep.
+            {resultProfile.noteSupport}
           </span>
         </p>
         <button
@@ -954,7 +853,7 @@ function ResultProfileScreen({ barrierScores, hasLostYearsBlock, onNext, result 
           onClick={onNext}
           className="group mt-5 flex min-h-14 w-full items-center justify-center gap-2 rounded-2xl bg-clay px-6 py-4 font-heading text-[1.02rem] font-semibold text-paper shadow-[0_18px_42px_rgba(143,94,61,0.22)] transition duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:bg-[#D0A587] hover:shadow-[0_24px_54px_rgba(143,94,61,0.26)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-midnight active:translate-y-0 sm:mt-0 sm:w-auto"
         >
-          <span>See what this means →</span>
+          <span>{resultProfile.cta}</span>
           <ArrowRight className="h-4 w-4 transition duration-300 ease-out group-hover:translate-x-1" aria-hidden="true" />
         </button>
       </div>
@@ -1021,14 +920,14 @@ function HopeCurve() {
 }
 
 function ReframeHopeScreen({ onNext }) {
-  const reassurancePills = ['No harsh exposure', 'No fake confidence', 'No pressure to perform'];
+  const { reframe } = resultsCopy;
 
   return (
     <section className="result-flow-motion relative z-10 mx-auto w-full max-w-[48rem] px-5 pb-14 pt-10 sm:px-7 sm:pb-20 sm:pt-12">
       <ScreenIntro
-        eyebrow="The Reframe"
-        title="This is trainable."
-        subtitle="Your next 8 weeks do not have to look like your last 8 years."
+        eyebrow={reframe.eyebrow}
+        title={reframe.title}
+        subtitle={reframe.subtitle}
       />
 
       <div className="mt-8">
@@ -1036,18 +935,13 @@ function ReframeHopeScreen({ onNext }) {
       </div>
 
       <div className="mt-7 max-w-[43rem] space-y-4 text-[1.08rem] leading-8 text-graphite/[0.68]">
-        <p>
-          Right now, your brain and body may treat simple social moments like danger. That is why
-          you freeze, overthink, avoid, or disappear after awkwardness.
-        </p>
-        <p>
-          The goal is not to become smooth overnight. The goal is to retrain your response through
-          small, repeatable reps.
-        </p>
+        {reframe.paragraphs.map((paragraph) => (
+          <p key={paragraph}>{paragraph}</p>
+        ))}
       </div>
 
       <div className="mt-7 grid gap-3 sm:grid-cols-3">
-        {reassurancePills.map((pill) => (
+        {reframe.reassurancePills.map((pill) => (
           <div
             key={pill}
             className="flex min-h-14 items-center gap-3 rounded-2xl border border-midnight/[0.08] bg-paper/[0.72] px-4 shadow-[0_14px_42px_rgba(15,36,55,0.06),inset_0_1px_0_rgba(255,255,255,0.72)]"
@@ -1063,7 +957,7 @@ function ReframeHopeScreen({ onNext }) {
       </div>
 
       <p className="mt-8 rounded-[1.2rem] border border-olive/[0.14] bg-olive/[0.07] px-4 py-4 text-[1rem] font-semibold leading-6 text-midnight shadow-[inset_0_1px_0_rgba(255,255,255,0.54)]">
-        Day 0 is not the whole system. It is the first proof that you can move.
+        {reframe.note}
       </p>
 
       <button
@@ -1071,7 +965,7 @@ function ReframeHopeScreen({ onNext }) {
         onClick={onNext}
         className="group mt-6 flex min-h-14 w-full items-center justify-center gap-2 rounded-2xl bg-clay px-6 py-4 font-heading text-[1.02rem] font-semibold text-paper shadow-[0_18px_42px_rgba(143,94,61,0.22)] transition duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:bg-[#D0A587] hover:shadow-[0_24px_54px_rgba(143,94,61,0.26)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-midnight active:translate-y-0 sm:w-auto"
       >
-        <span>Show me my Day 0 path →</span>
+        <span>{reframe.cta}</span>
         <ArrowRight className="h-4 w-4 transition duration-300 ease-out group-hover:translate-x-1" aria-hidden="true" />
       </button>
     </section>
@@ -1124,12 +1018,14 @@ function PaceOptionCard({ isSelected, onSelect, option }) {
 }
 
 function MicroCommitmentScreen({ onSelectPace, selectedPace }) {
+  const { microCommitment } = resultsCopy;
+
   return (
     <section className="result-flow-motion relative z-10 mx-auto w-full max-w-[45rem] px-5 pb-14 pt-10 sm:px-7 sm:pb-20 sm:pt-12">
       <ScreenIntro
-        eyebrow="Choose your starting pace"
-        title="How small do you want to start?"
-        subtitle="Pick the amount of daily practice that feels realistic today. Small is allowed."
+        eyebrow={microCommitment.eyebrow}
+        title={microCommitment.title}
+        subtitle={microCommitment.subtitle}
       />
 
       <div className="mt-8 grid gap-3">
@@ -1144,8 +1040,7 @@ function MicroCommitmentScreen({ onSelectPace, selectedPace }) {
       </div>
 
       <p className="mt-6 rounded-[1.2rem] border border-midnight/[0.08] bg-paper/[0.72] px-4 py-4 text-[1rem] leading-7 text-graphite/[0.66] shadow-[inset_0_1px_0_rgba(255,255,255,0.65)]">
-        Your Day 0 mission will stay small either way. The goal is not intensity. The goal is
-        completion.
+        {microCommitment.note}
       </p>
     </section>
   );
@@ -1231,9 +1126,9 @@ export default function ResultFlow({ answers, onBack }) {
     <>
       {showDownloadPage ? (
         <ResultHeader
-          ariaLabel="Download page"
-          backAriaLabel="Go back to field mission"
-          countLabel="GEAR"
+          ariaLabel={resultsCopy.resultHeader.downloadPageAriaLabel}
+          backAriaLabel={resultsCopy.resultHeader.downloadBackAriaLabel}
+          countLabel={resultsCopy.resultHeader.downloadCountLabel}
           onBack={goBack}
           stepCount={1}
           stepIndex={0}
@@ -1242,11 +1137,13 @@ export default function ResultFlow({ answers, onBack }) {
         <ResultHeader onBack={goBack} stepIndex={stepIndex} />
       ) : (
         <ResultHeader
-          ariaLabel="Screen 4 step"
+          ariaLabel={resultsCopy.resultHeader.screen4AriaLabel}
           backAriaLabel={
-            screen4StepIndex === 0 ? 'Go back to starting pace selection' : 'Go back to pre-flight checklist'
+            screen4StepIndex === 0
+              ? resultsCopy.resultHeader.screen4BackToPace
+              : resultsCopy.resultHeader.screen4BackToPreflight
           }
-          countLabel={`STEP ${screen4StepIndex + 1} of ${screen4StepCount}`}
+          countLabel={`${resultsCopy.resultHeader.screen4CountPrefix} ${screen4StepIndex + 1} ${resultsCopy.resultHeader.screen4CountConnector} ${screen4StepCount}`}
           onBack={goBack}
           stepCount={screen4StepCount}
           stepIndex={screen4StepIndex}

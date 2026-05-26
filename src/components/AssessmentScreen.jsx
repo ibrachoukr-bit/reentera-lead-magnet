@@ -11,15 +11,12 @@ import {
   Snowflake,
 } from 'lucide-react';
 import { answerOptions, assessmentQuestions, reassuranceCopy } from '../data/assessmentQuestions.js';
+import { assessmentCopy } from '../copy/assessmentCopy.js';
 import ResultFlow from './ResultFlow.jsx';
 
 const answerDelay = 190;
 const resultReadyDelay = 5400;
-const transitionStatuses = [
-  'Analyzing your response patterns...',
-  'Mapping your social re-entry profile...',
-  'Preparing your Day 0 path...',
-];
+const transitionStatuses = assessmentCopy.transitionStatuses;
 
 function resetAssessmentViewport() {
   window.scrollTo(0, 0);
@@ -42,18 +39,22 @@ function ProgressHeader({ currentQuestionIndex, onBack, totalQuestions }) {
           type="button"
           onClick={onBack}
           className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-midnight/[0.1] bg-paper/70 text-midnight shadow-[0_12px_32px_rgba(15,36,55,0.07),inset_0_1px_0_rgba(255,255,255,0.72)] transition duration-200 ease-out hover:-translate-y-0.5 hover:border-olive/30 hover:bg-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-olive active:translate-y-0"
-          aria-label={currentQuestionIndex === 0 ? 'Return to landing screen' : 'Go to previous question'}
+          aria-label={
+            currentQuestionIndex === 0
+              ? assessmentCopy.progressHeader.returnToLanding
+              : assessmentCopy.progressHeader.previousQuestion
+          }
         >
           <ArrowLeft className="h-[1.125rem] w-[1.125rem]" aria-hidden="true" />
         </button>
 
         <p className="min-w-0 text-center font-heading text-[1.02rem] font-semibold tracking-[0.01em] text-midnight">
-          ReEntera
+          {assessmentCopy.progressHeader.brand}
         </p>
 
         <p
           className="min-w-10 shrink-0 text-right text-[0.86rem] font-semibold tabular-nums text-graphite/60"
-          aria-label={`Question ${currentQuestionIndex + 1} of ${totalQuestions}`}
+          aria-label={`${assessmentCopy.progressHeader.questionAriaLabel} ${currentQuestionIndex + 1} of ${totalQuestions}`}
         >
           {currentQuestionIndex + 1} / {totalQuestions}
         </p>
@@ -210,8 +211,8 @@ function CompletionPlaceholder() {
       </div>
 
       <p className="mt-6 max-w-[23rem] text-[1.03rem] font-semibold leading-7 text-graphite/[0.62]">
-        No labels. No judgment.
-        <span className="block">Just your private starting point.</span>
+        {assessmentCopy.completion.lineOne}
+        <span className="block">{assessmentCopy.completion.lineTwo}</span>
       </p>
     </section>
   );
