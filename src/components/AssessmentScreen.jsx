@@ -309,16 +309,13 @@ export default function AssessmentScreen({
                 >
                   <QuestionVisualCue compact={isLongQuestion} iconKey={currentQuestion.iconKey} />
 
-                  <div className={isLongQuestion ? 'mt-4 text-center sm:mt-7' : 'mt-7 text-center'}>
-                    <p className="inline-flex rounded-full border border-olive/[0.18] bg-olive/[0.08] px-3.5 py-1.5 text-[0.77rem] font-bold uppercase tracking-[0.08em] text-olive">
-                      {currentQuestion.dimension}
-                    </p>
+                  <div className={isLongQuestion ? 'mt-5 text-center sm:mt-7' : 'mt-7 text-center'}>
                     <h1
                       className={[
                         'mx-auto max-w-[37rem] font-heading font-semibold tracking-normal text-midnight',
                         isLongQuestion
-                          ? 'mt-4 text-[1.36rem] leading-[1.12] sm:mt-5 sm:text-[2.05rem] sm:leading-[1.13]'
-                          : 'mt-5 text-[1.72rem] leading-[1.13] sm:text-[2.2rem]',
+                          ? 'text-[1.22rem] leading-[1.18] sm:text-[1.86rem] sm:leading-[1.14]'
+                          : 'text-[1.52rem] leading-[1.16] sm:text-[1.98rem]',
                       ].join(' ')}
                     >
                       {currentQuestion.question}
