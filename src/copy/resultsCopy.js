@@ -3,13 +3,13 @@ export const resultsCopy = {
     {
       key: 'basicSocialSkillsGap',
       label: 'Basic Social Skills Gap',
-      shortLabel: 'Skills',
+      shortLabel: 'Skills Gap',
       questionIndexes: [0, 1],
     },
     {
       key: 'fearOfBeingJudged',
       label: 'Fear of Being Judged',
-      shortLabel: 'Judged',
+      shortLabel: 'Judgment Fear',
       questionIndexes: [2, 3],
     },
     {
@@ -27,13 +27,13 @@ export const resultsCopy = {
     {
       key: 'physicalAnxietySymptoms',
       label: 'Physical Anxiety Symptoms',
-      shortLabel: 'Body',
+      shortLabel: 'Body Anxiety',
       questionIndexes: [8, 9],
     },
     {
       key: 'lowSelfDiscipline',
       label: 'Low Self-Discipline',
-      shortLabel: 'Follow-through',
+      shortLabel: 'Inaction',
       questionIndexes: [10, 11],
     },
   ],
@@ -130,7 +130,7 @@ export const resultsCopy = {
     radarAriaLabel: 'Radar chart showing the six current barrier scores',
     noteLead: 'You are not broken. You are under-trained.',
     noteSupport: 'The goal today is not confidence. The goal is one completed rep.',
-    cta: 'See what this means →',
+    cta: 'See what this means',
     lostYears: {
       title: 'A note on the lost years',
       paragraphs: [
