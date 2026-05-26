@@ -2,13 +2,13 @@ export const landingCopy = {
   header: {
     brand: 'ReEntera',
     descriptor: 'The Social Re-Entry System',
-    badge: 'Day 0 Scan',
+    badge: 'The Baseline Scan',
   },
   hero: {
-    badge: 'Private social re-entry baseline',
+    badge: 'THE SOCIAL RE-ENTRY BASELINE SCAN™',
     headline: 'Why do you freeze in simple social moments?',
     subheadline:
-      'Take the 90-second Day 0 Scan to find what is blocking your social re-entry, and get one safe first rep you can do in the next 24 hours.',
+      'Take the 90-second Baseline Scan to find your exact social bottleneck, and get a mechanical Day 0 action plan you can execute in the next 24 hours.',
     supportLine: 'No scripts. No therapy talk. No harsh exposure.',
     cta: 'Start The Scan',
     ctaAriaLabel: 'Start the Day 0 Scan',
@@ -16,9 +16,13 @@ export const landingCopy = {
   },
   preview: {
     ariaLabel: 'Day 0 Scan preview',
-    title: 'Your Day 0 Scan',
+    title: 'The Baseline Scan',
     subtitle: 'A private baseline for your first small step back in.',
-    signals: ['Social Avoidance', 'Conversation Freeze', 'Physical Anxiety Symptoms'],
+    signals: [
+      'Mechanical Bottleneck Identified',
+      'Nervous System Profile Mapped',
+      'Day 0 Action Plan Generated',
+    ],
   },
   reassuranceItems: [
     { label: '14 quick questions', iconKey: 'clock' },
