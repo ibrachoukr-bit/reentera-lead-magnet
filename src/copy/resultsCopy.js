@@ -121,7 +121,7 @@ export const resultsCopy = {
     },
   ],
   resultProfile: {
-    eyebrow: 'Your Day 0 Result',
+    eyebrow: 'YOUR BASELINE SCAN OUTPUT',
     title: 'Your Social Re-Entry Profile',
     subtitle: 'Here’s what is blocking your first step back into social life.',
     startingPatternLabel: 'Your Starting Pattern',
