@@ -39,8 +39,8 @@ export const resultsCopy = {
   ],
   resultConfig: {
     skill_gap_freeze: {
-      displayTitle: 'The “I Don’t Know What to Say” Pattern',
-      badge: 'Conversation Freeze',
+      displayTitle: 'The Conversational Skill-Gap Pattern',
+      badge: 'CONVERSATION GAP',
       fieldMissionTitle: 'Day 0 — The "Curiosity Drop" Rep',
       missionName: 'The Curiosity Drop Rep',
       explanation:
@@ -55,12 +55,12 @@ export const resultsCopy = {
         'Your answers suggest that avoidance is doing most of the damage right now. You may still function in daily life, but you avoid eye contact, small talk, and extra interaction because being seen feels unsafe.',
     },
     body_reaction: {
-      displayTitle: 'The Body-Reaction Pattern',
-      badge: 'Body Reaction',
+      displayTitle: 'The Body Panic Pattern',
+      badge: 'SOMATIC SPIKE',
       fieldMissionTitle: 'Day 0 — The "Functional Bypass" Rep',
       missionName: 'The Functional Bypass Rep',
       explanation:
-        'Your answers suggest that your body reacts before you can act. Your heart races, your face gets hot, or your mind goes blank, especially when the moment feels socially important.',
+        'Your answers show a physical bottleneck. Even if you have a skill gap, your nervous system triggers a false alarm first. Adrenaline floods your body, your heart races, and your mind goes blank, meaning physical panic overrides your logic before you even figure out what to say.',
     },
   },
   insightCards: [
@@ -102,20 +102,20 @@ export const resultsCopy = {
   paceOptions: [
     {
       id: '60-seconds',
-      title: '60 seconds / day',
+      title: '15 minutes / day',
       subtitle: 'Smallest possible start',
       description: 'For days when even leaving avoidance feels hard.',
     },
     {
       id: '3-minutes',
-      title: '3 minutes / day',
+      title: '20 minutes / day',
       badge: 'Recommended',
       subtitle: 'Steady re-entry',
       description: 'Enough to complete a real rep without making it feel overwhelming.',
     },
     {
       id: '5-minutes',
-      title: '5 minutes / day',
+      title: '30 minutes / day',
       subtitle: 'Faster practice',
       description: 'For days when you feel ready to stretch a little more.',
     },
@@ -142,7 +142,7 @@ export const resultsCopy = {
   },
   reframe: {
     eyebrow: 'The Reframe',
-    title: 'This is trainable.',
+    title: 'This is trainable',
     subtitle: 'Your next 8 weeks do not have to look like your last 8 years.',
     paragraphs: [
       'Right now, your brain and body may treat simple social moments like danger. That is why you freeze, overthink, avoid, or disappear after awkwardness.',
@@ -150,7 +150,7 @@ export const resultsCopy = {
     ],
     reassurancePills: ['No harsh exposure', 'No fake confidence', 'No pressure to perform'],
     note: 'Day 0 is not the whole system. It is the first proof that you can move.',
-    cta: 'Show me my Day 0 path →',
+    cta: 'Show me my Day 0 path',
   },
   microCommitment: {
     eyebrow: 'Choose your starting pace',

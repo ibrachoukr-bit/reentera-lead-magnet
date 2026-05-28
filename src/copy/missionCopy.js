@@ -91,7 +91,7 @@ export const missionCopy = {
       bridgeLead:
         'The Reality Check: Completing this rep today proves you can initiate. One rep is proof. But rebuilding your social life needs a ladder.',
       bridgeQuote:
-        'Knowing one conversational trick won\'t make you socially fluent. To learn the complete mechanics of human connection—how to transition from small talk to deep talk, how to read body language, and how to never run out of things to say—you need the complete 8-Week Social Re-Entry System.',
+        'Knowing one conversational trick won\'t make you socially fluent. To learn the complete mechanics of human connection, how to transition from small talk to deep talk, how to read body language, and how to never run out of things to say, you need the complete 8-Week Social Re-Entry System.',
     },
     body_reaction: {
       badge: 'STEP 2: THE FIELD MISSION',
@@ -131,7 +131,7 @@ export const missionCopy = {
     proofRule: 'The "Proof" Rule',
   },
   missionCta: {
-    accept: '🎯 ACCEPT MISSION & UNLOCK MY DAY 0 PDF GEAR ➔',
+    accept: 'ACCEPT MISSION & UNLOCK MY DAY 0 PDF GEAR ➔',
     microcopy: 'Takes 10 seconds. Direct download.',
   },
   emailCapture: {
@@ -142,7 +142,7 @@ export const missionCopy = {
     title: 'Unlock Your Day 0 Gear',
     lead: 'Enter your name and email to open your private download page.',
     body:
-      'You’ll get instant access to your Day 0 Field Guide, Proof Log, and 2-Minute Recovery Tool — plus a backup link sent to your inbox.',
+      'You’ll get instant access to your Day 0 Field Guide, Proof Log, and Foundation Guide — plus a backup link sent to your inbox.',
     firstNameLabel: 'First Name',
     firstNamePlaceholder: 'Your first name',
     firstNameRequired: 'First name is required.',
@@ -150,7 +150,7 @@ export const missionCopy = {
     emailPlaceholder: 'Your best email address',
     emailRequired: 'Email address is required.',
     emailInvalid: 'Enter a valid email address.',
-    submit: 'Unlock My Day 0 Gear →',
+    submit: 'Unlock My Day 0 Gear',
     reassurance: 'Instant access. Backup link by email. No spam.',
     privacy: 'We’ll only use this to send your Day 0 tools and ReEntera follow-up guidance.',
   },
